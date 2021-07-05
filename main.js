@@ -17,10 +17,10 @@ const outputPath = path.join(OUTPUT_DIR, 'team.html');
 const log = new Logger();
 
 //* Blank array to be filled in with pushed constructors classes.
-const teamMembersArray = [];
+const teamArray = [];
 
 //* Introduction Question to open the applicaiton
-const cliIntroQuestion = {
+const cliIntQ = {
 	type: 'list',
 	message: `
     	You have accessed the Team Profile Generator. 
@@ -33,8 +33,7 @@ const cliIntroQuestion = {
 	name: 'cliIntroQ',
 };
 
-//* Questions to be answered to fill in the manager constructor
-const managerQuestions = [
+const managerQ = [
 	{
 		type: 'input',
 		message: "What is the Manager's name?",
@@ -44,14 +43,18 @@ const managerQuestions = [
 		type: 'input',
 		message: "What is the Manager's ID number?",
 		name: 'managerId',
-		validate: function (num) {
-			numbers = /^[0-9]+$/.test(num);
-
-			if (numbers) {
-				log.green(`        ----------Number Formatting Accepted----------`);
+		validate: idFormat => {
+			if (idFormat) {
+				console.log(`
+				------------------------------
+				ID Accepted. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid ID Number that does not include anything other than numbers (No letters or symbols)----------`);
+				console.log(` 
+				------------------------------
+				Invalid ID
+				------------------------------`);
 				return false;
 			}
 		},
@@ -60,14 +63,18 @@ const managerQuestions = [
 		type: 'input',
 		message: "What is the Manager's email?",
 		name: 'manageEmail',
-		validate: function (emailInput) {
-			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
-
+		validate: emailFormat => {
 			if (emailFormat) {
-				log.green(`        ----------Email Formatting Accepted----------`);
+				console.log(`
+				------------------------------
+				Proper Email. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid email----------`);
+				console.log(`
+				------------------------------
+				Invalid Email
+				------------------------------`);
 				return false;
 			}
 		},
@@ -79,24 +86,22 @@ const managerQuestions = [
 	},
 ];
 
-//* questions that prompts the user if they want to add another team member.
-const endManagerQuestions = {
+// Prompt user to ask for TeamMember
+const addMember = {
 	type: 'list',
 	message: 'Would you like to add another team member to this team? Select Yes to add an Engineer or Intern team member or select No if no additional team members need to be added.',
 	choices: ['Yes', 'No'],
 	name: 'teamSize',
 };
 
-//* Question to ask which role the new team member should be mapped to.
 const teamMemberRolePick = {
 	type: 'list',
-	message: 'Is this team member an Engineer or an Intern?',
+	message: 'Is the upcoming team member an Engineer or an Intern?',
 	choices: ['Engineer', 'Intern'],
 	name: 'teamMemberRoleType',
 };
 
-//* Questions for the engineer profile
-const engineerQuestions = [
+const engineerQ = [
 	{
 		type: 'input',
 		message: "What is this Engineer's name?",
@@ -122,14 +127,18 @@ const engineerQuestions = [
 		type: 'input',
 		message: "What is this Engineer's email?",
 		name: 'engineerEmail',
-		validate: function (emailInput) {
-			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
-
+		validate: emailFormat => {
 			if (emailFormat) {
-				log.green(`        ----------Email Formatting Accepted----------`);
+				console.log(`
+				------------------------------
+				Proper Email. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid email----------`);
+				console.log(`
+				------------------------------
+				Invalid Email
+				------------------------------`);
 				return false;
 			}
 		},
@@ -141,8 +150,7 @@ const engineerQuestions = [
 	},
 ];
 
-//* Questions for the intern profile
-const internQuestions = [
+const internQ = [
 	{
 		type: 'input',
 		message: "What is this Intern's name?",
@@ -152,10 +160,9 @@ const internQuestions = [
 		type: 'input',
 		message: "What is this Intern's ID number?",
 		name: 'internId',
-		validate: function (num) {
-			numbers = /^[0-9]+$/.test(num);
+		validate: numbersTest => {
 
-			if (numbers) {
+			if (numbersTest) {
 				log.green(`        ----------Number Formatting Accepted----------`);
 				return true;
 			} else {
@@ -168,78 +175,78 @@ const internQuestions = [
 		type: 'input',
 		message: "What is this Intern's email?",
 		name: 'internEmail',
-		validate: function (emailInput) {
-			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
-
+		validate: emailFormat => {
 			if (emailFormat) {
-				log.green(`        ----------Email Formatting Accepted----------`);
+				console.log(`
+				------------------------------
+				Proper Email. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid email----------`);
+				console.log(`
+				------------------------------
+				Invalid Email
+				------------------------------`);
 				return false;
 			}
 		},
 	},
 	{
 		type: 'input',
-		message: "What is this Intern's School/University?",
+		message: "Does the Intern have a place of study/education?",
 		name: 'internSchool',
 	},
 ];
 
-//* Initial function that asks if the user wants to build the team and prints the introduction message. If they select Yes, then they will be instructed to fill in the manager's information for the next function call of managerInfo() as there can only be one manager for this profile page
 function cliIntro() {
-	inquirer.prompt(cliIntroQuestion).then((appStart) => {
-		if (appStart.cliIntroQ === 'Begin Creation') {
-			log.green('Please Submit Manager Profile Information');
+	inquirer.prompt(cliIntQ).then((appStart) => {
+		if (appStart.cliIntroQ === 'Let us initialize.') {
+			console.log('Input project manager infomration.');
 			managerInfo();
 		} else {
-			log.yellow(`
-        ------------------------------------------------------------
-        ---------------------Application Closed---------------------
-        ------------------------------------------------------------
+			console.log(`
+			------------------------------------------------------------------
+						--No information to begin. Canceled.--
+			------------------------------------------------------------------
             `);
 		}
 	});
 }
 
-//* Function to build the team manager and then call the function to start building the team size
 function managerInfo() {
-	inquirer.prompt(managerQuestions).then((managerBuild) => {
+	inquirer.prompt(managerQ).then((managerBuild) => {
 		let manager = new Manager(managerBuild.managerName, managerBuild.managerId, managerBuild.manageEmail, managerBuild.managerOfficeNumber);
-		teamMembersArray.push(manager);
-		//* Since there is only one manager class to be built, the teamSizeinfo function is then called to start building the individual team members
+		teamArray.push(manager);
 		teamSizeInfo();
 	});
 }
 
-//* Function to determine the size of the team with additional engineers or interns
 function teamSizeInfo() {
-	inquirer.prompt(endManagerQuestions).then((teamSize) => {
-		//* By choosing yes, you can add another team member to the array. This re-cals the teamMemberloop funciton which goes throught the questions to add a new team member to the array
+	inquirer.prompt(addMember).then((teamSize) => {
 		if (teamSize.teamSize === 'Yes') {
 			teamMemberLoop();
 		}
 		if (teamSize.teamSize === 'No') {
-			//* If no more members need to be added, then the application is ended by choosing No and then the file is written to the HTML template
-			renderHTML(teamMembersArray);
+			renderHTML(teamArray);
 		}
 	});
 }
 
-//* Function to choose the type of team member (engineer or intern) and prompt questions to build additional class constructors.
 function teamMemberLoop() {
 	inquirer.prompt(teamMemberRolePick).then((teamrole) => {
 		if (teamrole.teamMemberRoleType === 'Engineer') {
-			log.blue('Please Submit Engineer Profile Information');
-			inquirer.prompt(engineerQuestions).then((engineerBuild) => {
+			console.log('Information on project engineer(s).');
+
+			inquirer.prompt(engineerQ).then((engineerBuild) => {
+
 				let engineer = new Engineer(engineerBuild.enginnerName, engineerBuild.engineerId, engineerBuild.engineerEmail, engineerBuild.engineerGithub);
-				teamMembersArray.push(engineer);
+				teamArray.push(engineer);
+
 				teamSizeInfo();
 			});
 		} else if (teamrole.teamMemberRoleType === 'Intern') {
-			log.magenta('Please Submit Intern Profile Information');
-			inquirer.prompt(internQuestions).then((internBuild) => {
+			log.magenta('Information on project intern(s).');
+			inquirer.prompt(internQ).then((internBuild) => {
 				let intern = new Intern(internBuild.internName, internBuild.internId, internBuild.internEmail, internBuild.internSchool);
 				teamMembersArray.push(intern);
 				teamSizeInfo();
@@ -248,19 +255,18 @@ function teamMemberLoop() {
 	});
 }
 
-//* Function to write array information to HTML templates when no more team members are added to the application. Uses Async Await function formatting to ensure that the write file is done after the rendering of the HTML from the array is completed.
 
 async function renderHTML(file) {
 	const htmlProfilePage = render(file);
 
 	await writeFileAsync(outputPath, htmlProfilePage).then(function () {
-		log.green(`
-        ----------------------------------------------------------------
-        ---------------------Team Profile Completed---------------------
-        ----------------------------------------------------------------
+		console.log(`
+        ------------------------------------------------------------------
+        			--Team Generated. HTML has been created.--
+        ------------------------------------------------------------------
         `);
 	});
 }
 
-//* Calls cliIntro function to start the CLI Application.
 cliIntro();
+// Initiate
