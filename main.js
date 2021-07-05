@@ -16,10 +16,10 @@ const outputPath = path.join(OUTPUT_DIR, 'team.html');
 
 const log = new Logger();
 
-//* Blank array to be filled in with pushed constructors classes.
 const teamArray = [];
 
-//* Introduction Question to open the applicaiton
+//* Introduction and Beginning
+
 const cliIntQ = {
 	type: 'list',
 	message: `
