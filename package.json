@@ -1,31 +1,29 @@
 {
-	"name": "unit10hw",
-	"version": "1.0.0",
-	"description": "OOP and testing for week 10 homework",
-	"main": "app.js",
-	"directories": {
-		"lib": "lib",
-		"test": "test"
-	},
-	"scripts": {
-		"test": "jest --verbose test/*"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/stevetrilogy/unit10hw.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/stevetrilogy/unit10hw/issues"
-	},
-	"homepage": "https://github.com/stevetrilogy/unit10hw#readme",
-	"dependencies": {
-		"inquirer": "^6.3.1",
-		"utf8": "^3.0.0",
-		"util": "^0.12.3"
-	},
-	"devDependencies": {
-		"jest": "^24.8.0"
-	}
+  "name": "team-profile",
+  "version": "1.0.0",
+  "description": "team profile generator application created by Mervens Victor. user inputs information regarding teamates and status, and app creates an html page with the information visible",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mervens/Team-Profs.git"
+  },
+  "keywords": [
+    "profile"
+  ],
+  "author": "Mervens Victor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mervens/Team-Profs/issues"
+  },
+  "homepage": "https://github.com/Mervens/Team-Profs#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
 }
