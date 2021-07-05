@@ -1,14 +1,12 @@
-# Unit 10 OOP Homework: Template Engine - Employee Summary
+# Team Profile: HTML Site Generation
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Description
 
 
 ## Demo
 
-<img src="/DemoImgs/TeamGeneratorGif.gif?raw=true">
-<img src="/DemoImgs/S1.png?raw=true">
 
 ## Table of Contents
 
@@ -16,7 +14,6 @@
 -   [Usage](#usage)
 -   [Credits](#credits)
 -   [License](#license)
--   [Contributing](#contributing)
 -   [Questions](#questions)
 
 ## Installation
@@ -24,12 +21,10 @@
 
 ## Usage
 
-
-
-
 ## License
 
-    								MIT License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+    					MIT License
 
 
     		Permission is hereby granted, free of charge, to any person obtaining a copy
