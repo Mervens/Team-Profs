@@ -111,14 +111,18 @@ const engineerQ = [
 		type: 'input',
 		message: "What is this Engineer's ID number?",
 		name: 'engineerId',
-		validate: function (num) {
-			numbers = /^[0-9]+$/.test(num);
-
-			if (numbers) {
-				log.green(`        ----------Number Formatting Accepted----------`);
+		validate: idFormat => {
+			if (idFormat) {
+				console.log(`
+				------------------------------
+				ID Accepted. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid ID Number that does not include anything other than numbers (No letters or symbols)----------`);
+				console.log(` 
+				------------------------------
+				Invalid ID
+				------------------------------`);
 				return false;
 			}
 		},
@@ -160,13 +164,18 @@ const internQ = [
 		type: 'input',
 		message: "What is this Intern's ID number?",
 		name: 'internId',
-		validate: numbersTest => {
-
-			if (numbersTest) {
-				log.green(`        ----------Number Formatting Accepted----------`);
+		validate: idFormat => {
+			if (idFormat) {
+				console.log(`
+				------------------------------
+				ID Accepted. Next,
+				------------------------------`);
 				return true;
 			} else {
-				log.red(`        ----------Please enter a valid ID Number that does not include anything other than numbers (No letters or symbols)----------`);
+				console.log(` 
+				------------------------------
+				Invalid ID
+				------------------------------`);
 				return false;
 			}
 		},
