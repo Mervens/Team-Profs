@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const path = require('path');
 const util = require('util');
 const fs = require('fs');
-const Logger = require('./logger');
+const Logger = require('./logger.js');
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const Manager = require('./lib/Manager');
@@ -12,8 +12,7 @@ const Intern = require('./lib/Intern');
 const OUTPUT_DIR = path.resolve(__dirname, 'output');
 const outputPath = path.join(OUTPUT_DIR, 'team.html');
 
-// const render = require('./lib/htmlRenderer');
-
+const render = require('./lib/htmlRender');
 const log = new Logger();
 
 const teamArray = [];
@@ -43,7 +42,8 @@ const managerQ = [
 		type: 'input',
 		message: "What is the Manager's ID number?",
 		name: 'managerId',
-		validate: idFormat => {
+		validate: idInput => {
+			idFormat = /^[0-9]+$/.test(idInput);
 			if (idFormat) {
 				console.log(`
 				------------------------------
@@ -63,7 +63,8 @@ const managerQ = [
 		type: 'input',
 		message: "What is the Manager's email?",
 		name: 'manageEmail',
-		validate: emailFormat => {
+		validate: emailInput => {
+			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
 			if (emailFormat) {
 				console.log(`
 				------------------------------
@@ -111,7 +112,8 @@ const engineerQ = [
 		type: 'input',
 		message: "What is this Engineer's ID number?",
 		name: 'engineerId',
-		validate: idFormat => {
+		validate: idInput => {
+			idFormat = /^[0-9]+$/.test(idInput);
 			if (idFormat) {
 				console.log(`
 				------------------------------
@@ -131,7 +133,8 @@ const engineerQ = [
 		type: 'input',
 		message: "What is this Engineer's email?",
 		name: 'engineerEmail',
-		validate: emailFormat => {
+		validate: emailInput => {
+			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
 			if (emailFormat) {
 				console.log(`
 				------------------------------
@@ -164,7 +167,8 @@ const internQ = [
 		type: 'input',
 		message: "What is this Intern's ID number?",
 		name: 'internId',
-		validate: idFormat => {
+		validate: idInput => {
+			idFormat = /^[0-9]+$/.test(idInput);
 			if (idFormat) {
 				console.log(`
 				------------------------------
@@ -184,7 +188,8 @@ const internQ = [
 		type: 'input',
 		message: "What is this Intern's email?",
 		name: 'internEmail',
-		validate: emailFormat => {
+		validate: emailInput => {
+			emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput);
 			if (emailFormat) {
 				console.log(`
 				------------------------------
@@ -209,13 +214,13 @@ const internQ = [
 
 function cliIntro() {
 	inquirer.prompt(cliIntQ).then((appStart) => {
-		if (appStart.cliIntroQ === 'Let us initialize.') {
-			console.log('Input project manager infomration.');
+		if (appStart.cliIntroQ === 'Yes') {
+			console.log('Let us initialize. Input project manager information.');
 			managerInfo();
 		} else {
 			console.log(`
 			------------------------------------------------------------------
-						--No information to begin. Canceled.--
+					--No information to begin. Canceled.--
 			------------------------------------------------------------------
             `);
 		}
@@ -257,7 +262,7 @@ function teamMemberLoop() {
 			log.magenta('Information on project intern(s).');
 			inquirer.prompt(internQ).then((internBuild) => {
 				let intern = new Intern(internBuild.internName, internBuild.internId, internBuild.internEmail, internBuild.internSchool);
-				teamMembersArray.push(intern);
+				teamArray.push(intern);
 				teamSizeInfo();
 			});
 		}
