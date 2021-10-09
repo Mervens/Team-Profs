@@ -28,6 +28,7 @@ THEN I exit the application, and the HTML is generated
 ## Description  
 This assignment was to create a Team Profile generator. Using the index.js, you can create a site based on the information the user inputs. You will decide the name of the groups, their roles, and then their Github, schooling, or ID number. The html will be generated for you in the output.
 
+
 ## How It Works  
 
 **Install the needed packages in the terminal using:**
@@ -39,6 +40,7 @@ This assignment was to create a Team Profile generator. Using the index.js, you 
 `node index.js`
 
 ## Example
+![C10-1](https://user-images.githubusercontent.com/82620500/136670087-611a2a89-3981-45e9-a731-ac1770572658.png)
 ![TeamProVid](https://watch.screencastify.com/v/L2fR5wJdNl8KDWMTx5KC)
 
 ## Shareable Link to this Repo 
