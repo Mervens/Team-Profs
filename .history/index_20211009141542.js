@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const path = require('path');
 const util = require('util');
 const fs = require('fs');
+const Logger = require('./logger.js');
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const Manager = require('./lib/Manager');
